@@ -22,7 +22,7 @@ const Navbar = () => {
         <NavLink to="/collection">
           <div className="flex flex-col items-center gap-1">
             <p>COLLECTION</p>
-            <a href="https://google.com">joyabet</a>
+            
             <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
           </div>
         </NavLink>
