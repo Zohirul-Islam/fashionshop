@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Prata&display=swap');
 *{
     font-family: outfit;
 }
@@ -11,6 +10,9 @@
 
 a.active hr{
     display: block;
+}
+select,option{
+  padding: 0;
 }
 @media (max-width:640px){
   a.active{
