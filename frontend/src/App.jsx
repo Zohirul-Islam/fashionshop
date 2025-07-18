@@ -10,10 +10,13 @@ import Orders from './pages/Orders';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import SearchBar from './components/SearchBar';
+ import { ToastContainer, toast } from 'react-toastify';
+ import 'react-toastify/dist/ReactToastify.css'
 
 const App = () => {
   return (
     <div className="px-3 sm:px-5 md:px-7 lg:px-9">
+      <ToastContainer/>
       <Navbar/>
       <SearchBar/>
       <Routes>
@@ -21,7 +24,7 @@ const App = () => {
         <Route path='/about' element = {<About/>}/>
         <Route path='/cart' element = {<Cart/>}/>
         <Route path='/collection' element = {<Collection/>}/>
-        <Route path='/product/:productId' element = {<Product/>}/>
+        <Route path='/product/:id' element = {<Product/>}/>
         <Route path='/login' element = {<Login/>}/>
         <Route path='/place-orders' element = {<PlaceOrder/>}/>
         <Route path='/orders' element = {<Orders/>}/>
