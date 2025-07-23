@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { assets } from "../assets/assets";
 import Title from "../components/Title";
-import { shopContext } from "../context/ShopContext";
+import { shopContext } from "../context/Shopcontext";
 import ProductItem from "../components/ProductItem";
 
 const Collection = () => {
@@ -11,6 +11,7 @@ const Collection = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedSubcategories, setSelectedSubcategories] = useState([]);
   const [sortType,setSortType] = useState('relavent')
+
 
   /* catagory handler */
   const handleCategoryChange = (e) => {
@@ -37,10 +38,12 @@ const applyFilter = () =>{
   }
   if(selectedCategories.length > 0){
     productCopy = productCopy.filter((item)=>selectedCategories.includes(item.category));
+    console.log(productCopy)
   }
    if(selectedSubcategories.length > 0){
     
-    productCopy = productCopy.filter((item)=>selectedSubcategories.includes(item.subCategory));
+    productCopy = productCopy.filter((item)=>selectedSubcategories.includes(item.subcategory));
+    console.log(productCopy)
   }
   
   setfilterProduct(productCopy)
@@ -64,14 +67,11 @@ const sortProduct = () =>{
 
 useEffect(()=>{
   applyFilter()
-},[selectedCategories,selectedSubcategories,search,showSearch]);
+},[selectedCategories,selectedSubcategories,search,showSearch,products]);
 useEffect(()=>{
   sortProduct()
 },[sortType])
 
-  useEffect(()=>{
-    setfilterProduct(products);
-  },[]);
   return (
     <div className="min-h-screen flex flex-col gap-1 sm:flex-row sm:gap-10">
       {/* Sidebar */}

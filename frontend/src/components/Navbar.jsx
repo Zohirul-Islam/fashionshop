@@ -4,7 +4,14 @@ import { Link, NavLink } from "react-router-dom";
 import { shopContext } from "../context/ShopContext";
 const Navbar = () => {
     const [visible,setVisible] = useState(false);
-    const {setShowSerch,getCartCount} = useContext(shopContext);
+    const {setShowSerch,getCartCount,token,setToken,navigate} = useContext(shopContext);
+    const Logout = () =>{
+      navigate('/login')
+      localStorage.removeItem('token');
+      
+      setToken('');
+      
+    }
   return (
     <div className="flex items-center justify-between py-5 font-medium  text-white">
       <Link to={"/"}>
@@ -40,16 +47,18 @@ const Navbar = () => {
       <div className="flex items-center gap-3 sm:gap-6">
         <img onClick={()=>setShowSerch(true)} src={assets.search_icon} alt="" className="w-5 cursor-pointer" />
         <div className="group relative">
+          <Link to ='/login'>
           <img
             src={assets.profile_icon}
             alt=""
             className="w-5 cursor-pointer"
           />
+          </Link>
           <div className="absolute hidden group-hover:block dropdown-menu right-0 pt-4">
             <div className="flex flex-col gap-2 w-36 py-2 px-3 bg-slate-200">
               <p className="cursor-pointer">My Profile</p>
               <p className="cursor-pointer">Orders</p>
-              <p className="cursor-pointer">Logout</p>
+              <p onClick={()=>Logout()} className="cursor-pointer">Logout</p>
             </div>
           </div>
         </div>

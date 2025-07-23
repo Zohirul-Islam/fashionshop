@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { shopContext } from "../context/ShopContext";
+import { shopContext } from "../context/Shopcontext";
 import Title from "./Title";
 import ProductItem from "./ProductItem";
 
@@ -10,7 +10,7 @@ const Bestseller = () => {
 
   useEffect(() => {
     setBestseller(filerProduct);
-  }, []);
+  }, [products]);
   return (
     <div className="my-10">
       <div className="text-center py-10 text-3xl">

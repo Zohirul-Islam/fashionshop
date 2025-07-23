@@ -1,17 +1,33 @@
 import { createContext, useEffect, useState } from "react";
-import { products } from "../assets/assets";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 export const shopContext = createContext();
 
 const ShopContextProvider = ({ children }) => {
   const currency = "$";
-
+  const backend_url = 'http://localhost:4000'
   const delivery_fee = 10;
   const [search, setSerch] = useState("");
   const [showSearch, setShowSerch] = useState(false);
   const [cartItem, setCartItem] = useState({});
-  const navigate = useNavigate()
+  const [products,setProducts] = useState([]);
+  const [token,setToken] = useState('');
+  const navigate = useNavigate();
+
+  const getProducts = async() =>{
+      try {
+        const response = await axios.get(backend_url + '/api/product/list');
+        if(response.data.success){
+          setProducts(response.data.products)
+        }else{
+          toast.error(response.data.message)
+        }
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+        toast.error(error.message)
+      }
+  }
 
   const addToCart = async (itemId, size) => {
     // Check if size is selected
@@ -50,6 +66,7 @@ const ShopContextProvider = ({ children }) => {
     }
     return totalCount;
   };
+
   const updateQuantity = async (itemId, size, quantity) => {
     let cartData = structuredClone(cartItem);
     cartData[itemId][size] = quantity;
@@ -75,6 +92,14 @@ const ShopContextProvider = ({ children }) => {
   useEffect(() => {
     console.log(getCartCount());
   });
+  useEffect(()=>{
+    if(!token && localStorage.getItem('token')){
+      setToken(localStorage.getItem('token'))
+    }
+  })
+  useEffect(()=>{
+    getProducts()
+  },[])
   const value = {
     products,
     currency,
@@ -88,7 +113,10 @@ const ShopContextProvider = ({ children }) => {
     getCartCount,
     updateQuantity,
     getCartAmount,
-    navigate
+    navigate,
+    backend_url,
+    token,
+    setToken
   };
 
   return <shopContext.Provider value={value}>{children}</shopContext.Provider>;
