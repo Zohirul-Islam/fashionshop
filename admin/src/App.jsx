@@ -7,7 +7,7 @@ import Orders from "./pages/Orders";
 import { useEffect, useState } from "react";
 import Login from "./components/Login";
 import { ToastContainer} from 'react-toastify';
-export const backendUrl = 'http://localhost:4000/';
+export const backendUrl = 'http://localhost:4000';
 export const currency = "$"
 
 

@@ -50,6 +50,14 @@ const ShopContextProvider = ({ children }) => {
 
     // Update the cart state
     setCartItem(cartData);
+    if(token){
+      try {
+        await axios.post(backend_url + '/api/cart/add', {itemId,size}, {headers:{token}})
+      } catch (error) {
+        console.log(error)
+        toast.error(error.message);
+      }
+    }
 
     // Optional toast success
     toast.success("Added to cart");
@@ -71,6 +79,14 @@ const ShopContextProvider = ({ children }) => {
     let cartData = structuredClone(cartItem);
     cartData[itemId][size] = quantity;
     setCartItem(cartData);
+    if(token){
+      try {
+        await axios.post(backend_url + '/api/cart/update',{itemId, size, quantity},{headers:{token}})
+      } catch (error) {
+        console.log(error)
+        toast.error(error.message);
+      }
+    }
   };
   const getCartAmount = () =>{
     let totalAmout = 0;
@@ -88,13 +104,26 @@ const ShopContextProvider = ({ children }) => {
     }
     return totalAmout
   }
+  const getUserCart = async(token) =>{
+      try {
+        const response = await axios.post(backend_url + '/api/cart/get',{},{headers:{token}});
+        if(response.data.success){
+          setCartItem(response.data.cartData)
+        }
+      } catch (error) {
+        console.log(error)
+        toast.error(error.message);
+      }
+  }
 
   useEffect(() => {
     console.log(getCartCount());
   });
+  /* this use effect is run when token is empty for reload and take token from localstorage */
   useEffect(()=>{
     if(!token && localStorage.getItem('token')){
       setToken(localStorage.getItem('token'))
+      getUserCart(localStorage.getItem('token'))
     }
   })
   useEffect(()=>{
@@ -109,6 +138,7 @@ const ShopContextProvider = ({ children }) => {
     showSearch,
     setShowSerch,
     cartItem,
+    setCartItem,
     addToCart,
     getCartCount,
     updateQuantity,

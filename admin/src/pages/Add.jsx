@@ -12,7 +12,7 @@ function Add({ token }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Men");
-  const [subCategory, setSubCategory] = useState("Topwear");
+  const [subcategory, setSubCategory] = useState("Topwear");
   const [price, setPrice] = useState("");
   const [sizes, setSizes] = useState([]);
   const [bestseller, setBestseller] = useState(false);
@@ -27,13 +27,15 @@ function Add({ token }) {
       formData.append('price',price);
       formData.append('bestseller',bestseller);
       formData.append('category',category);
-      formData.append('subCategory',subCategory);
+      formData.append('subcategory',subcategory);
       formData.append('sizes',JSON.stringify(sizes));
       image1 && formData.append('image1',image1);
       image1 && formData.append('image2',image2);
       image1 && formData.append('image3',image3);
       image1 && formData.append('image4',image4);
-      const response = await axios.post(backendUrl + 'api/product/add',formData);
+      console.log(formData);
+      console.log(subcategory)
+      const response = await axios.post(backendUrl + '/api/product/add',formData);
       if(response.data.success){
           toast.success(response.data.message);
           setName('');

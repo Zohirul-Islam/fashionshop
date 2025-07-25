@@ -9,8 +9,8 @@ const { products, currency, cartItem,updateQuantity,navigate } = useContext(shop
 const [cartData, setCartData] = useState([]);
 
 useEffect(() => {
-  const tempData = [];
-
+  if(products.length > 0){
+      const tempData = [];
   for (const itemId in cartItem) {
     for (const size in cartItem[itemId]) {
       const quantity = cartItem[itemId][size];
@@ -24,8 +24,9 @@ useEffect(() => {
     }
   }
 
-  setCartData(tempData); // ✅ update the state
-}, [cartItem]); // ✅ Add cartItem as dependency
+  setCartData(tempData);
+  }
+}, [cartItem,products]); // ✅ Add cartItem as dependency
 
   return (
     <div className="border-t pt-14">

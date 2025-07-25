@@ -1,21 +1,22 @@
 import React, { useContext, useState } from "react";
 import { assets } from "../assets/assets";
 import { Link, NavLink } from "react-router-dom";
-import { shopContext } from "../context/ShopContext";
+import { shopContext } from "../context/Shopcontext";
 const Navbar = () => {
     const [visible,setVisible] = useState(false);
-    const {setShowSerch,getCartCount,token,setToken,navigate} = useContext(shopContext);
+    const {setShowSerch,getCartCount,token,setToken,navigate,setCartItem} = useContext(shopContext);
     const Logout = () =>{
-      navigate('/login')
+      navigate('/login');
       localStorage.removeItem('token');
-      
+      setCartItem({})
       setToken('');
       
     }
   return (
-    <div className="flex items-center justify-between py-5 font-medium  text-white">
+    <div className="flex items-center justify-between py-5 font-medium  text-white border-b border-gray-300">
       <Link to={"/"}>
-        <img className="36" src={assets.logo} alt="" />
+        {/* <img className="36" src={assets.logo} alt="" /> */}
+        <h2 className="text-blue-800 font-bold sm:text-5xl text-2xl">Fashion <span className="text-blue-800">Shop</span></h2>
       </Link>
       <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
         <NavLink to="/">
@@ -47,20 +48,22 @@ const Navbar = () => {
       <div className="flex items-center gap-3 sm:gap-6">
         <img onClick={()=>setShowSerch(true)} src={assets.search_icon} alt="" className="w-5 cursor-pointer" />
         <div className="group relative">
-          <Link to ='/login'>
           <img
+          onClick={()=>token ? null :navigate('/login')}
             src={assets.profile_icon}
             alt=""
             className="w-5 cursor-pointer"
           />
-          </Link>
+          {
+            token && 
           <div className="absolute hidden group-hover:block dropdown-menu right-0 pt-4">
-            <div className="flex flex-col gap-2 w-36 py-2 px-3 bg-slate-200">
+            <div className="flex flex-col gap-2 w-40 py-2 px-5 bg-slate-600">
               <p className="cursor-pointer">My Profile</p>
-              <p className="cursor-pointer">Orders</p>
+              <p onClick={()=>navigate('/orders')} className="cursor-pointer">Orders</p>
               <p onClick={()=>Logout()} className="cursor-pointer">Logout</p>
             </div>
           </div>
+          }
         </div>
         <Link to="/cart" className="relative">
             <img className="w-5 cursor-pointer" src={assets.cart_icon} alt="" />

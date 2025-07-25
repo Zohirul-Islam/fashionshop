@@ -11,46 +11,51 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const onSubmitHandler = async (e) => {
-    e.preventDefault();
-    try {
-      if (currentState === "Sign Up") {
-        console.log(backend_url);
-        const response = await axios.post(backend_url + "/api/user/register", {
-          name,
-          email,
-          password,
-        });
-        if (response.data.success) {
-          setToken(response.data.token);
-          localStorage.setItem("token", response.data.token);
-          toast(response.data.message);
-          setName('');
-          setEmail('');
-          setPassword('')
-        } else {
-          console.log(response.data.message);
-          toast.error(response.data.message);
-        }
-      } else {
-        const response = await axios.post(backend_url + "/api/user/login", {
-          email,
-          password,
-        });
+  
+const onSubmitHandler = async (e) => {
+  e.preventDefault();
+  try {
+    if (currentState === "Sign Up") {
+      const response = await axios.post(`${backend_url}/api/user/register`, {
+        name,
+        email,
+        password,
+      });
+      if (response.data.success) {
         setToken(response.data.token);
         localStorage.setItem("token", response.data.token);
-          toast(response.data.message);
+        toast(response.data.message);
+        setName("");
+        setEmail("");
+        setPassword("");
+      } else {
+        toast.error(response.data.message);
       }
-    } catch (error) {
-      console.log(error)
-      toast.error(error.message);
+    } else {
+      const response = await axios.post(`${backend_url}/api/user/login`, {
+        email,
+        password,
+      });
+      if (response.data.success) {
+        setToken(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        toast(response.data.message);
+        setEmail("");
+        setPassword("");
+      } else {
+        toast.error(response.data.message);
+      }
     }
-  };
-  useEffect(()=>{
-    if(token){
-      navigate('/')
-    }
-  })
+  } catch (error) {
+    console.error("Login error:", error);
+    toast.error("Something went wrong. Please try again.");
+  }
+};
+useEffect(() => {
+  if (token) {
+    navigate("/");
+  }
+}, [token, navigate]);
   return (
     <form
       onSubmit={onSubmitHandler}
