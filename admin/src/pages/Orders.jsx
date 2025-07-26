@@ -26,6 +26,21 @@ const Orders = ({ token }) => {
       toast.error(error.message);
     }
   };
+const statusHandler = async (event, orderId) => {
+  try {
+    const response = await axios.post(
+      backendUrl + "/api/order/status",
+      { orderId, status: event.target.value },
+      { headers: { token } }
+    );
+    if (response.data.success) {
+      fetchAllorders();
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error(error?.response?.data?.message || "Status update failed.");
+  }
+};
 
   useEffect(() => {
     fetchAllorders();
@@ -89,7 +104,7 @@ const Orders = ({ token }) => {
 
           {/* Status Dropdown */}
           <div>
-            <select defaultValue={order.status || "Order Placed"} className="border p-1 rounded">
+            <select onChange={(event)=>statusHandler(event,order._id)} defaultValue={order.status || "Order Placed"} className="border p-1 rounded">
               <option value="Order Placed">Order Placed</option>
               <option value="Packing">Packing</option>
               <option value="Shipped">Shipped</option>
