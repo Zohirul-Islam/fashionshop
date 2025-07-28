@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import Title from "../components/Title";
 import CartTotal from "../components/CartTotal";
 import { assets } from "../assets/assets";
-import { shopContext } from "../context/Shopcontext";
+import { ShopContext } from "../context/Shopcontext";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -16,7 +16,7 @@ const PlaceOrder = () => {
     backend_url,
     token,
     setCartItem,
-  } = useContext(shopContext);
+  } = useContext(ShopContext);
   const [method, setMethod] = useState("cod");
   const [formData, setFormData] = useState({
     firstName: "",

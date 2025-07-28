@@ -2,7 +2,8 @@ import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-export const shopContext = createContext();
+
+export const ShopContext = createContext();
 
 const ShopContextProvider = ({ children }) => {
   const currency = "$";
@@ -17,7 +18,7 @@ const ShopContextProvider = ({ children }) => {
 
   const getProducts = async() =>{
       try {
-        const response = await axios.get(backend_url + '/api/product/list');
+        const response = await axios.get(backend_url + '/api/product/list',{},{headers: { Authorization: `Bearer ${token}` }});
         if(response.data.success){
           setProducts(response.data.products)
         }else{
@@ -106,7 +107,7 @@ const ShopContextProvider = ({ children }) => {
   }
   const getUserCart = async(token) =>{
       try {
-        const response = await axios.post(backend_url + '/api/cart/get',{},{headers:{token}});
+        const response = await axios.post(backend_url + '/api/cart/list',{},{headers:{token}});
         if(response.data.success){
           setCartItem(response.data.cartData)
         }
@@ -149,6 +150,6 @@ const ShopContextProvider = ({ children }) => {
     setToken
   };
 
-  return <shopContext.Provider value={value}>{children}</shopContext.Provider>;
+  return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 };
 export default ShopContextProvider;

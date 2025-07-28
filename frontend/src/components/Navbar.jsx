@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import { assets } from "../assets/assets";
 import { Link, NavLink } from "react-router-dom";
-import { shopContext } from "../context/Shopcontext";
+import { ShopContext } from "../context/Shopcontext";
 const Navbar = () => {
     const [visible,setVisible] = useState(false);
-    const {setShowSerch,getCartCount,token,setToken,navigate,setCartItem} = useContext(shopContext);
+    const {setShowSerch,getCartCount,token,setToken,navigate,setCartItem} = useContext(ShopContext);
     const Logout = () =>{
       navigate('/login');
       localStorage.removeItem('token');

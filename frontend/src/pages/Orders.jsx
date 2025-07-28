@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Title from '../components/Title';
-import { shopContext } from "../context/Shopcontext";
+import { ShopContext } from "../context/Shopcontext";
 import axios from 'axios';
 
 const Orders = () => {
-  const { token, backend_url, currency } = useContext(shopContext);
+  const { token, backend_url, currency } = useContext(ShopContext);
   const [orderData, setOrderData] = useState([]);
 
   const loadOrderData = async () => {

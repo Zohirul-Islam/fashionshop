@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useContext, useEffect } from "react";
 import { useState } from "react";
-import { shopContext } from "../context/Shopcontext";
+import { ShopContext } from "../context/Shopcontext";
 import { toast } from "react-toastify";
 
 const Login = () => {
-  const { backend_url, setToken, token, navigate } = useContext(shopContext);
+  const { backend_url, setToken, token, navigate } = useContext(ShopContext);
   const [currentState, setCurrentState] = useState("Login");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
