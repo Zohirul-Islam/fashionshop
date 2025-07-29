@@ -19,7 +19,7 @@ export const ShopContextProvider = ({ children }) => {
   const getProducts = async () => {
     try {
       const response = await axios.get(backend_url + "/api/product/list");
-      console.log(response);
+      
       if (response.data.success) {
         setProducts(response.data.products);
       } else {
