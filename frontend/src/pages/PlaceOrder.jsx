@@ -29,6 +29,7 @@ const PlaceOrder = () => {
     country: "",
     phone: "",
   });
+  
   const onChangeHandler = (event) => {
     let name = event.target.name;
     let value = event.target.value;
@@ -37,20 +38,12 @@ const PlaceOrder = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      let orderItems = [];
-      for (let key in formData) {
-        if (!formData[key]) {
-          toast.error("Please fill out all delivery information fields.");
-          return;
-        }
-      }
-      for (const items in cartItem) {
-        for (const item in cartItem[items]) {
-          if (cartItem[items][item] > 0) {
-            const itemInfo = structuredClone(
-              products.find((product) => product._id === items)
-            );
-            if (itemInfo) {
+      let orderItems = []
+      for(const items in cartItem){
+        for(const item in cartItem[items]){
+          if(cartItem[items][item] > 0){
+            const itemInfo = structuredClone(products.find(product=>product._id === items))
+            if(itemInfo){
               itemInfo.size = item;
               itemInfo.quantity = cartItem[items][item];
               orderItems.push(itemInfo);
@@ -59,43 +52,23 @@ const PlaceOrder = () => {
         }
       }
       let orderData = {
-        address: formData,
-        items: orderItems,
-        amount: getCartAmount() + delivery_fee,
-      };
+        address:formData,
+        items:orderItems,
+        amount:getCartAmount() + delivery_fee
+      }
 
-      switch (method) {
-        case "cod":
-          const response = await axios.post(
-            backend_url + "/api/order/place",
-            orderData,
-            { headers: { token } }
-          );
-          if (response.data.success) {
-            setCartItem({});
-            navigate("/orders");
-          } else {
-            toast.error(error.message);
-          }
+      switch(method){
+        case 'cod' :
+            const response = await axios.post(backend_url + '/api/order/place',orderData,{ headers: { Authorization: `Bearer ${token}` } })
+            console.log(response)
           break;
-        case "stripe":
-          const responseStripe = await axios.post(
-            backend_url + "/api/order/stripe",
-            orderData,
-            { headers: { token } }
-          );
-          if (responseStripe.data.success) {
-            const { session_url } = responseStripe.data;
-            window.location.replace(session_url);
-          } else {
-            toast.error(responseStripe.data.message);
-          }
-          break;
+
         default:
-          break;
+
+          break;  
       }
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Failed to place order.");
+      
     }
   };
 
@@ -117,6 +90,7 @@ const PlaceOrder = () => {
             value={formData.firstName}
             name="firstName"
             onChange={onChangeHandler}
+            required
           />
           <input
             className="border border-gray-300 rounded px-3.5 w-full py-1.5"
@@ -125,6 +99,7 @@ const PlaceOrder = () => {
             value={formData.lastName}
             name="lastName"
             onChange={onChangeHandler}
+            required
           />
         </div>
         <input
@@ -134,6 +109,7 @@ const PlaceOrder = () => {
           value={formData.email}
           name="email"
           onChange={onChangeHandler}
+          required
         />
         <input
           className="border border-gray-300 rounded px-3.5 w-full py-1.5"
@@ -142,6 +118,7 @@ const PlaceOrder = () => {
           value={formData.street}
           name="street"
           onChange={onChangeHandler}
+          required
         />
         <div className="flex gap-3">
           <input
@@ -151,6 +128,7 @@ const PlaceOrder = () => {
             value={formData.city}
             name="city"
             onChange={onChangeHandler}
+            required
           />
           <input
             className="border border-gray-300 rounded px-3.5 w-full py-1.5"
@@ -159,6 +137,7 @@ const PlaceOrder = () => {
             value={formData.state}
             name="state"
             onChange={onChangeHandler}
+            required
           />
         </div>
         <div className="flex gap-3">
@@ -169,6 +148,7 @@ const PlaceOrder = () => {
             value={formData.zipCode}
             name="zipCode"
             onChange={onChangeHandler}
+            required
           />
           <input
             className="border border-gray-300 rounded px-3.5 w-full py-1.5"
@@ -177,6 +157,7 @@ const PlaceOrder = () => {
             value={formData.country}
             name="country"
             onChange={onChangeHandler}
+            required
           />
         </div>
         <input
@@ -186,6 +167,7 @@ const PlaceOrder = () => {
           value={formData.phone}
           name="phone"
           onChange={onChangeHandler}
+          required
         />
       </div>
       {/* right side */}
@@ -237,6 +219,7 @@ const PlaceOrder = () => {
           <button
             type="submit"
             className="bg-black text-white px-16 py-3 text-sm"
+            onClick={()=>navigate('/orders')}
           >
             PLACE ORDER
           </button>
@@ -246,4 +229,4 @@ const PlaceOrder = () => {
   );
 };
 
-export default PlaceOrder;
+export default PlaceOrder;  

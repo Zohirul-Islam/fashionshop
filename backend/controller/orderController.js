@@ -6,43 +6,66 @@ const currency  = 'INR'
 const DeliveryCharges = 10
 // placing order using cash on method
 const placeOrderCod = async (req, res) => {
-  try {
-    const { userId, items, amount, address } = req.body;
+
+ try {
+    const {userId,items,amount,address} = req.body;
+   
+    
+   
+
+    // Build order object
     const orderData = {
       userId,
       items,
       amount,
       address,
-      paymentMethod: "cod",
+      paymentMethod: "COD",
       payment: false,
+      status: "Pending", // optional: set default status
       date: Date.now(),
     };
+ 
+
+
+    // Save order
     const newOrder = new orderModel(orderData);
     await newOrder.save();
+
+    // Clear user's cart
     await userModel.findByIdAndUpdate(userId, { cartData: {} });
-    res.json({ success: true, message: "order placed" });
+
+    res.status(201).json({
+      success: true,
+      message: "Order placed successfully.",
+      orderId: newOrder._id,
+    });
   } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: error.message });
+    console.error("Error placing COD order:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error. Please try again.",
+      error: error.message,
+    });
   }
 };
+
 // placing order using stripe method
 
 const placeOrderStripe = async (req, res) => {
   try {
-    const { userId, items, amount, address } = req.body;
+    const {userId, items, amount, address } = req.body;
     const { origin } = req.headers;
-    const orderData = {
-      userId,
-      items,
-      amount,
-      address,
-      paymentMethod: "cod",
-      payment: false,
-      date: Date.now(),
-    };
-    const newOrder = new orderModel(orderData);
-    await newOrder.save();
+ 
+
+    // Validate inputs
+    if (!userId || !items?.length || !amount || !address || !origin) {
+      return res.status(400).json({
+        success: false,
+        message: 'Missing required fields',
+      });
+    }
+
+    // Prepare line items
     const line_items = items.map((item) => ({
       price_data: {
         currency: currency,
@@ -53,6 +76,8 @@ const placeOrderStripe = async (req, res) => {
       },
       quantity: item.quantity,
     }));
+
+    // Add delivery charge
     line_items.push({
       price_data: {
         currency: currency,
@@ -63,18 +88,30 @@ const placeOrderStripe = async (req, res) => {
       },
       quantity: 1,
     });
+
+    // Create checkout session
     const session = await stripe.checkout.sessions.create({
-      success_url:`${origin}/verify?success=true&orderId=${newOrder._id}`,
-      cancel_url:`${origin}/verify?success=false&orderId=${newOrder._id}`,
+      success_url: `${origin}/verify?success=true&userId=${userId}&address=${encodeURIComponent(
+        JSON.stringify(address)
+      )}`,
+      cancel_url: `${origin}/verify?success=false`,
       line_items,
-      mode:'payment'
-    })
-    res.json({success:true,session_url:session.url})
+      mode: 'payment',
+      metadata: {
+        userId,
+        amount,
+        address: JSON.stringify(address),
+        items: JSON.stringify(items),
+      },
+    });
+
+    res.status(200).json({ success: true, session_url: session.url });
   } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: error.message });
+    console.error('Stripe error:', error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
+
 // placing order using razorpay method
 const placeOrderRazorpay = async (req, res) => {};
 //all order data for admin panel

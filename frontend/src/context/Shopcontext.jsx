@@ -53,7 +53,7 @@ const ShopContextProvider = ({ children }) => {
     setCartItem(cartData);
     if(token){
       try {
-        await axios.post(backend_url + '/api/cart/add', {itemId,size}, {headers:{token}})
+        await axios.post(backend_url + '/api/cart/add', {itemId,size}, {headers:{ Authorization: `Bearer ${token}` }})
       } catch (error) {
         console.log(error)
         toast.error(error.message);
@@ -82,7 +82,7 @@ const ShopContextProvider = ({ children }) => {
     setCartItem(cartData);
     if(token){
       try {
-        await axios.post(backend_url + '/api/cart/update',{itemId, size, quantity},{headers:{token}})
+        await axios.post(backend_url + '/api/cart/update',{itemId, size, quantity},{headers:{ Authorization: `Bearer ${token}` }})
       } catch (error) {
         console.log(error)
         toast.error(error.message);
@@ -107,7 +107,7 @@ const ShopContextProvider = ({ children }) => {
   }
   const getUserCart = async(token) =>{
       try {
-        const response = await axios.post(backend_url + '/api/cart/list',{},{headers:{token}});
+        const response = await axios.post(backend_url + '/api/cart/list',{},{headers:{ Authorization: `Bearer ${token}` }});
         if(response.data.success){
           setCartItem(response.data.cartData)
         }
@@ -119,14 +119,14 @@ const ShopContextProvider = ({ children }) => {
 
   useEffect(() => {
     console.log(getCartCount());
-  });
+  },[cartItem]);
   /* this use effect is run when token is empty for reload and take token from localstorage */
   useEffect(()=>{
     if(!token && localStorage.getItem('token')){
       setToken(localStorage.getItem('token'))
       getUserCart(localStorage.getItem('token'))
     }
-  })
+  },[])
   useEffect(()=>{
     getProducts()
   },[])
