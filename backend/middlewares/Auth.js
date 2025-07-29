@@ -1,10 +1,14 @@
 import jwt from "jsonwebtoken";
 
 const authUser = async (req, res, next) => {
-  const {token} = req.headers;
-  if(!token){
-    res.json({success:false,message:"not authorise login plz"})
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized. Please log in.",
+    });
   }
+   const token = authHeader.split(" ")[1];
   try {
     const token_decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.body.userId = token_decoded.id;

@@ -1,16 +1,12 @@
-
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import { BrowserRouter } from 'react-router-dom'
-import ShopContextProvider from './context/Shopcontext.jsx'
-createRoot(document.getElementById('root')).render(
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.jsx";
+import { BrowserRouter } from "react-router-dom";
+import { ShopContextProvider } from "./context/Shopcontext.jsx";
+createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-  <ShopContextProvider>
+    <ShopContextProvider>
       <App />
-  </ShopContextProvider>
-    
-  
-    
-  </BrowserRouter>,
-)
+    </ShopContextProvider>
+  </BrowserRouter>
+);
