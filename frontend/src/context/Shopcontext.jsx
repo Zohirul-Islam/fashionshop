@@ -7,7 +7,7 @@ export const ShopContext = createContext();
 
 export const ShopContextProvider = ({ children }) => {
   const currency = "$";
-  const backend_url = "http://localhost:4000";
+  const backend_url = "https://vercel.com/zohirul-islams-projects/fashionshop-si52";
   const delivery_fee = 10;
   const [search, setSerch] = useState("");
   const [showSearch, setShowSerch] = useState(false);
