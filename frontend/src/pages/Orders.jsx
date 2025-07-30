@@ -13,7 +13,7 @@ const Orders = () => {
       const response = await axios.post(
         backend_url + '/api/order/userorders',
         {},
-        { headers: { token } }
+        { headers:{ Authorization: `Bearer ${token}` } }
       );
 
       if (response.data.success) {

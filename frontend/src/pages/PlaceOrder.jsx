@@ -56,17 +56,23 @@ const PlaceOrder = () => {
         items:orderItems,
         amount:getCartAmount() + delivery_fee
       }
+    
 
-      switch(method){
+        switch(method){
         case 'cod' :
             const response = await axios.post(backend_url + '/api/order/place',orderData,{ headers: { Authorization: `Bearer ${token}` } })
-            console.log(response)
+            if(response.data.success){ 
+              setCartItem({});
+              navigate('/orders');
+            }else{
+              toast.error(response.data.message);
+            }
           break;
 
         default:
 
           break;  
-      }
+      }  
     } catch (error) {
       
     }
@@ -219,7 +225,6 @@ const PlaceOrder = () => {
           <button
             type="submit"
             className="bg-black text-white px-16 py-3 text-sm"
-            onClick={()=>navigate('/orders')}
           >
             PLACE ORDER
           </button>

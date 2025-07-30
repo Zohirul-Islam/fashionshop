@@ -88,13 +88,13 @@ useEffect(()=>{
           <p className="font-medium text-md mb-5">CATAGORIES</p>
           <div className="flex flex-col gap-1 text-sm font-light">
             <p className="flex gap-2">
-              <input onChange={handleCategoryChange} type="checkbox" value={"Men"} /> Men
+              <input name="men"  onChange={handleCategoryChange} type="checkbox" value={"Men"} /> Men
             </p>
             <p className="flex gap-2">
-              <input onChange={handleCategoryChange} type="checkbox" value={"Women"} /> Women
+              <input name="women"  onChange={handleCategoryChange} type="checkbox" value={"Women"} /> Women
             </p>
             <p className="flex gap-2">
-              <input onChange={handleCategoryChange} type="checkbox" value={"Kids"} /> Kids
+              <input name="kids" onChange={handleCategoryChange} type="checkbox" value={"Kids"} /> Kids
             </p>
           </div>
         </div>
@@ -107,13 +107,13 @@ useEffect(()=>{
           <p className="font-medium text-md mb-5">Type</p>
           <div className="flex flex-col gap-1 text-sm font-light">
             <p className="flex gap-2">
-              <input onChange={handleSubcategoryChange} type="checkbox" value={"Topwear"} /> Topwear
+              <input name="topwear" onChange={handleSubcategoryChange} type="checkbox" value={"Topwear"} /> Topwear
             </p>
             <p className="flex gap-2">
-              <input onChange={handleSubcategoryChange} type="checkbox" value={"Bottomwear"} /> Bottomwear
+              <input name="bottomwear" onChange={handleSubcategoryChange} type="checkbox" value={"Bottomwear"} /> Bottomwear
             </p>
             <p className="flex gap-2">
-              <input onChange={handleSubcategoryChange} type="checkbox" value={"Winterwear"} /> Winterwear
+              <input name="winterwear" onChange={handleSubcategoryChange} type="checkbox" value={"Winterwear"} /> Winterwear
             </p>
           </div>
         </div>
@@ -123,7 +123,7 @@ useEffect(()=>{
       <main className="flex-1 p-6">
           <div className="flex justify-between text-base sm:text-2xl mb-4 gap-2 flex-col sm:flex-row">
             <Title txt1={'ALL'} txt2={'COLLECTION'}/>
-            <select  onChange={(e)=>setSortType(e.target.value)} className=" border-gray-300 text-sm px-2 h-[50px] border outline-0 " >
+            <select name="sort" onChange={(e)=>setSortType(e.target.value)} className=" border-gray-300 text-sm px-2 h-[50px] border outline-0 " >
               <option value="relavent">Sort by:relevent</option>
               <option value="high-low">Sort by:high to low</option>
               <option value="low-high">Sort by:low to high</option>
