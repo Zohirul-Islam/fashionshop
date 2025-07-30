@@ -60,6 +60,10 @@ const PlaceOrder = () => {
 
         switch(method){
         case 'cod' :
+            if(!token){
+              toast.error("Please login to place order");
+              return;
+            }
             const response = await axios.post(backend_url + '/api/order/place',orderData,{ headers: { Authorization: `Bearer ${token}` } })
             if(response.data.success){ 
               setCartItem({});
