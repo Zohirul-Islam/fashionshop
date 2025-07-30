@@ -7,7 +7,9 @@ export const ShopContext = createContext();
 
 export const ShopContextProvider = ({ children }) => {
   const currency = "$";
+
   const backend_url = "https://fashionshop-si52.vercel.app";
+
   const delivery_fee = 10;
   const [search, setSerch] = useState("");
   const [showSearch, setShowSerch] = useState(false);
@@ -19,7 +21,7 @@ export const ShopContextProvider = ({ children }) => {
   const getProducts = async () => {
     try {
       const response = await axios.get(backend_url + "/api/product/list");
-      
+
       if (response.data.success) {
         setProducts(response.data.products);
       } else {
@@ -31,7 +33,7 @@ export const ShopContextProvider = ({ children }) => {
     }
   };
 
-    const addToCart = async (itemId, size) => {  
+  const addToCart = async (itemId, size) => {
     // Check if size is selected
     if (!size) {
       toast.error("Please select product size");
@@ -57,7 +59,7 @@ export const ShopContextProvider = ({ children }) => {
         await axios.post(
           backend_url + "/api/cart/add",
           { itemId, size },
-          {headers:{ Authorization: `Bearer ${token}` }}
+          { headers: { Authorization: `Bearer ${token}` } }
         );
       } catch (error) {
         console.log(error);
@@ -133,18 +135,18 @@ export const ShopContextProvider = ({ children }) => {
       console.error("Cart fetch error:", error);
       toast.error(error.response?.data?.message || error.message);
     }
-  }; 
+  };
 
   useEffect(() => {
     console.log(getCartCount());
   }, [cartItem]);
-  
+
   useEffect(() => {
     if (!token && localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
       getUserCart(localStorage.getItem("token"));
     }
-  }, []); 
+  }, []);
   useEffect(() => {
     getProducts();
   }, []);
@@ -171,4 +173,3 @@ export const ShopContextProvider = ({ children }) => {
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 };
-
