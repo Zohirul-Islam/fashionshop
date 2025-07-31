@@ -4,18 +4,19 @@ import { IoMdHome } from "react-icons/io";
 import { FiShoppingCart } from "react-icons/fi";
 import { ShopContext } from "../context/Shopcontext";
 import { Link } from "react-router-dom";
-const MobileMenu = () => {
-    const {token,navigate,getCartCount,logout,setCartItem,setToken} = useContext(ShopContext);
-    const count = getCartCount();
-      const Logout = () =>{
-      navigate('/login');
-      localStorage.removeItem('token');
-      setCartItem({})
-      setToken('');
-      
-    }
+
+const Mobilebar = () => {
+        const {token,navigate,getCartCount,logout,setCartItem,setToken} = useContext(ShopContext);
+        const count = getCartCount();
+          const Logout = () =>{
+          navigate('/login');
+          localStorage.removeItem('token');
+          setCartItem({})
+          setToken('');
+          
+        }
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-amber-600 w-full sm:hidden">
+        <div className="fixed bottom-0 left-0 right-0 bg-amber-600 w-full sm:hidden">
       <div  className="py-3 flex justify-between items-center px-5">
         <div onClick={()=>navigate('/')} className="flex flex-col items-center text-gray-800 cursor-pointer">
         <IoMdHome className="text-3xl" />
@@ -49,7 +50,7 @@ const MobileMenu = () => {
         
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MobileMenu;
+export default Mobilebar

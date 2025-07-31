@@ -13,7 +13,8 @@ import Footer from './components/Footer';
 import SearchBar from './components/SearchBar';
  import { ToastContainer, toast } from 'react-toastify';
  import 'react-toastify/dist/ReactToastify.css'
-import MobileMenu from './components/MobileMenu';
+import Mobilebar from './components/Mobilebar';
+
 
 
 
@@ -35,7 +36,7 @@ const App = () => {
         <Route path='/contact' element = {<Contact/>}/>
       </Routes>
       <Footer/>
-      <MobileMenu/>
+      <Mobilebar/>
     </div>
   )
 }
