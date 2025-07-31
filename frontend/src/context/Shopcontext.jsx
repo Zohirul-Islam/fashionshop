@@ -115,7 +115,8 @@ export const ShopContextProvider = ({ children }) => {
   const getUserCart = async (token) => {
     try {
       const response = await axios.post(
-        `${backend_url}/api/cart/list`,{},
+        `${backend_url}/api/cart/list`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
