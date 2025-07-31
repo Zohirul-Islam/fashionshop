@@ -16,6 +16,7 @@ import SearchBar from './components/SearchBar';
 import MobileMenu from './components/MobileMenu';
 
 
+
 const App = () => {
   return (
     <div className="px-3 sm:px-5 md:px-7 lg:px-9">
