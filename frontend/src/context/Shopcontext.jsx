@@ -8,7 +8,6 @@ export const ShopContext = createContext();
 export const ShopContextProvider = ({ children }) => {
   const currency = "$";
   const backend_url = "https://fashionshop-si52.vercel.app";
-
   const delivery_fee = 10;
   const [search, setSerch] = useState("");
   const [showSearch, setShowSerch] = useState(false);
