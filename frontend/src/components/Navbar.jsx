@@ -53,7 +53,7 @@ const Navbar = () => {
           onClick={()=>token ? null :navigate('/login')}
             src={assets.profile_icon}
             alt=""
-            className="w-5 cursor-pointer"
+            className="w-5 cursor-pointer hidden sm:block"
           />
           {
             token && 
@@ -66,7 +66,7 @@ const Navbar = () => {
           </div>
           }
         </div>
-        <Link to="/cart" className="relative ">
+        <Link to="/cart" className="relative hidden sm:block">
             <img className="w-5 cursor-pointer" src={assets.cart_icon} alt="" />
             <p className="bg-black w-5 sm:w-8 h-5 sm:h-8 text-center text-white  border rounded-full absolute top-[-10px] right-[-10px]">{getCartCount()}</p>
         </Link>
