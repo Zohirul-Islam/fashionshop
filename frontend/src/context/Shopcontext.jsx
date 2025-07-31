@@ -115,8 +115,7 @@ export const ShopContextProvider = ({ children }) => {
   const getUserCart = async (token) => {
     try {
       const response = await axios.post(
-        `${backend_url}/api/cart/list`,
-        {},
+        `${backend_url}/api/cart/list`,{},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -130,7 +129,7 @@ export const ShopContextProvider = ({ children }) => {
         toast.error(response.data.message || "Failed to fetch cart.");
       }
     } catch (error) {
-      console.error("Cart fetch error:", error);
+      console.log(error);
       toast.error(error.response?.data?.message || error.message);
     }
   };
