@@ -14,6 +14,7 @@ const Navbar = () => {
     }
   return (
     <div className="flex items-center justify-between py-5 font-medium  text-white border-b border-gray-300">
+      <img onClick={()=>setVisible(true)} src={assets.menu_icon} className="cursor-pointer w-5 sm:hidden" alt="" />
       <Link to={"/"}>
         {/* <img className="36" src={assets.logo} alt="" /> */}
         <h2 className="text-blue-800 font-bold sm:text-5xl text-2xl">Fashion <span className="text-blue-800">Shop</span></h2>
@@ -65,23 +66,23 @@ const Navbar = () => {
           </div>
           }
         </div>
-        <Link to="/cart" className="relative">
+        <Link to="/cart" className="relative ">
             <img className="w-5 cursor-pointer" src={assets.cart_icon} alt="" />
-            <p className="bg-black w-8 h-8 text-center text-white  border rounded-full absolute top-[-25px] right-[-20px]">{getCartCount()}</p>
+            <p className="bg-black w-5 sm:w-8 h-5 sm:h-8 text-center text-white  border rounded-full absolute top-[-10px] right-[-10px]">{getCartCount()}</p>
         </Link>
-        <img onClick={()=>setVisible(true)} src={assets.menu_icon} className="cursor-pointer w-5 sm:hidden" alt="" />
+        
       </div>
       {/* sidebar menu for small screen */}
-      <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? 'w-full' :"w-0"}`}>
+      <div className={`absolute top-0 left-0 bottom-0 overflow-hidden pt-10  bg-white transition-all ${visible ? 'w-[250px]' :"w-0"}`}>
         <div className="flex flex-col text-gray-600">
             <div onClick={()=>setVisible(false)} className="flex items-center gap-4 p-3">
                 <img src={assets.dropdown_icon} className="h-4 rotate-180" alt="" />
                 <p>BACK</p>
             </div>
-            <NavLink onClick={()=>setVisible(false)} className="py-2 pl-6 border" to="/">HOME</NavLink>
-            <NavLink onClick={()=>setVisible(false)} className="py-2 pl-6 border" to="/collection">COLLECTION</NavLink>
-            <NavLink onClick={()=>setVisible(false)} className="py-2 pl-6 border" to="/about">ABOUT</NavLink>
-            <NavLink onClick={()=>setVisible(false)} className="py-2 pl-6 border" to="/contact">CONTACT</NavLink>
+            <NavLink onClick={()=>setVisible(false)} className="py-2 pl-6  " to="/">HOME</NavLink>
+            <NavLink onClick={()=>setVisible(false)} className="py-2 pl-6 " to="/collection">COLLECTION</NavLink>
+            <NavLink onClick={()=>setVisible(false)} className="py-2 pl-6 " to="/about">ABOUT</NavLink>
+            <NavLink onClick={()=>setVisible(false)} className="py-2 pl-6 " to="/contact">CONTACT</NavLink>
         </div>
       </div>
     </div>

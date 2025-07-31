@@ -14,6 +14,7 @@ import SearchBar from './components/SearchBar';
  import { ToastContainer, toast } from 'react-toastify';
  import 'react-toastify/dist/ReactToastify.css'
 
+
 const App = () => {
   return (
     <div className="px-3 sm:px-5 md:px-7 lg:px-9">
@@ -32,6 +33,7 @@ const App = () => {
         <Route path='/contact' element = {<Contact/>}/>
       </Routes>
       <Footer/>
+      
     </div>
   )
 }
