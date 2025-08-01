@@ -5,7 +5,7 @@ const Hero = () => {
   return (
     <div className="bg-gray-100 w-full flex flex-col sm:flex-row ">
       {/* hero left side */}
-      <div className="w-full sm:w-1/2 flex items-center justify-center py-10 sm:py-0">
+      <div className="w-full sm:w-1/2 flex items-center justify-center py-10 sm:py-0 bg-[#F6E1D2]">
         <div className="text-[#414141]">
           <div className="flex gap-2 items-center">
             <p className="w-8 h-[2px] bg-[#414141]"></p>
@@ -20,7 +20,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
-        <img className="w-full sm:w-1/2" src={assets.hero_img} alt="" />
+        <img className="w-full sm:w-1/2" src={assets.banner} alt="" />
     </div>
   );
 };
